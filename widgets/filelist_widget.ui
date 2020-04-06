@@ -6,15 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>253</width>
-    <height>92</height>
+    <width>300</width>
+    <height>300</height>
    </rect>
+  </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::CustomContextMenu</enum>
   </property>
   <property name="acceptDrops">
    <bool>true</bool>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>File list</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -34,12 +37,41 @@
    </property>
    <item>
     <widget class="QTableView" name="tableView">
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
      <attribute name="horizontalHeaderStretchLastSection">
       <bool>true</bool>
      </attribute>
     </widget>
    </item>
   </layout>
+  <action name="actionCopy">
+   <property name="text">
+    <string>Copy</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionDelete_data">
+   <property name="text">
+    <string>Delete data</string>
+   </property>
+   <property name="shortcut">
+    <string>Del</string>
+   </property>
+  </action>
+  <action name="actionColumn_Settings">
+   <property name="text">
+    <string>Column Settings</string>
+   </property>
+  </action>
+  <action name="actionClear">
+   <property name="text">
+    <string>Clear</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections>
@@ -59,8 +91,94 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tableView</sender>
+   <signal>customContextMenuRequested(QPoint)</signal>
+   <receiver>Filelist</receiver>
+   <slot>context_menu()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>126</x>
+     <y>86</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>126</x>
+     <y>86</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCopy</sender>
+   <signal>triggered()</signal>
+   <receiver>Filelist</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>126</x>
+     <y>86</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDelete_data</sender>
+   <signal>triggered()</signal>
+   <receiver>Filelist</receiver>
+   <slot>delete_data()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>126</x>
+     <y>86</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionColumn_Settings</sender>
+   <signal>triggered()</signal>
+   <receiver>Filelist</receiver>
+   <slot>column_settings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>149</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionClear</sender>
+   <signal>triggered()</signal>
+   <receiver>Filelist</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>149</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>tableViewClicked()</slot>
+  <slot>context_menu()</slot>
+  <slot>copy()</slot>
+  <slot>paste()</slot>
+  <slot>delete_data()</slot>
+  <slot>column_settings()</slot>
+  <slot>clear()</slot>
  </slots>
 </ui>

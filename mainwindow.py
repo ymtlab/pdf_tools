@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(474, 338)
+        MainWindow.resize(500, 400)
         font = QtGui.QFont()
         font.setPointSize(10)
         MainWindow.setFont(font)
@@ -41,14 +41,14 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.graphicsView)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 474, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 500, 21))
         self.menubar.setAcceptDrops(False)
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setAcceptDrops(False)
         self.menuFile.setObjectName("menuFile")
-        self.menuTool = QtWidgets.QMenu(self.menubar)
-        self.menuTool.setObjectName("menuTool")
+        self.menuView = QtWidgets.QMenu(self.menubar)
+        self.menuView.setObjectName("menuView")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -77,6 +77,19 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.addWidget(self.widget)
         self.dockWidgetFile.setWidget(self.dockWidgetContents)
         MainWindow.addDockWidget(QtCore.Qt.DockWidgetArea(1), self.dockWidgetFile)
+        self.dockWidgetUnite = QtWidgets.QDockWidget(MainWindow)
+        self.dockWidgetUnite.setObjectName("dockWidgetUnite")
+        self.dockWidgetContents_2 = QtWidgets.QWidget()
+        self.dockWidgetContents_2.setObjectName("dockWidgetContents_2")
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.dockWidgetContents_2)
+        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_3.setSpacing(0)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.widget_2 = Unite(self.dockWidgetContents_2)
+        self.widget_2.setObjectName("widget_2")
+        self.verticalLayout_3.addWidget(self.widget_2)
+        self.dockWidgetUnite.setWidget(self.dockWidgetContents_2)
+        MainWindow.addDockWidget(QtCore.Qt.DockWidgetArea(2), self.dockWidgetUnite)
         self.actionOpen = QtWidgets.QAction(MainWindow)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/remixicon/file-line.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -85,7 +98,7 @@ class Ui_MainWindow(object):
         self.actionOpen.setObjectName("actionOpen")
         self.menuFile.addAction(self.actionOpen)
         self.menubar.addAction(self.menuFile.menuAction())
-        self.menubar.addAction(self.menuTool.menuAction())
+        self.menubar.addAction(self.menuView.menuAction())
         self.toolBar.addAction(self.actionOpen)
         self.toolBar.addSeparator()
 
@@ -95,12 +108,14 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "PDF Stamp"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "PDF tools"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
-        self.menuTool.setTitle(_translate("MainWindow", "View"))
+        self.menuView.setTitle(_translate("MainWindow", "View"))
         self.toolBar.setWindowTitle(_translate("MainWindow", "toolBar"))
         self.dockWidgetFile.setWindowTitle(_translate("MainWindow", "File list"))
+        self.dockWidgetUnite.setWindowTitle(_translate("MainWindow", "Unite"))
         self.actionOpen.setText(_translate("MainWindow", "Open PDFs"))
 from graphics_view import GraphicsView
 from widgets.filelist import Filelist
+from widgets.unite import Unite
 import resource_rc

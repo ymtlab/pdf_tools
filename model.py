@@ -69,6 +69,43 @@ class Model(QtCore.QAbstractItemModel):
         self.endInsertRows()
         return True
 
+    def moveRow(self, sourceParent, sourceRow, destinationParent, destinationChild):
+        return self.moveRows(sourceParent, sourceRow, 1, destinationParent, destinationChild)
+
+    def moveRows(self, sourceParent, sourceRow, count, destinationParent, destinationChild):
+        sourceRowEnd = sourceRow + count - 1
+        self.beginMoveRows(sourceParent, sourceRow, sourceRowEnd, destinationParent, destinationChild)
+
+        # source item
+        if sourceParent == QtCore.QModelIndex():
+            item = self.root_item
+        else:
+            item = sourceParent.internalPointer()
+        
+        # move children
+        children = item.move_send(sourceRow, sourceRowEnd + 1)
+
+        # insert item
+        if destinationParent == QtCore.QModelIndex():
+            item = self.root_item
+        else:
+            item = destinationParent.internalPointer()
+
+        # insert row
+        if sourceParent == destinationChild:
+            if sourceRow > destinationChild:
+                row = destinationChild
+            else:
+                row = sourceRow  + 1
+        else:
+            row = destinationChild
+        
+        # insert to children
+        item.move_receive(children, row)
+
+        self.endMoveRows()
+        return True
+
     def parent(self, index):
         if not index.isValid():
             return QtCore.QModelIndex()
@@ -78,11 +115,18 @@ class Model(QtCore.QAbstractItemModel):
             return QtCore.QModelIndex()
         return self.createIndex(parent_item.row(), 0, parent_item)
         
+    def removeColumn(self, column, parent=QtCore.QModelIndex()):
+        return self.removeColumns(column, 1, parent)
+
     def removeColumns(self, column, count, parent=QtCore.QModelIndex()):
         self.beginRemoveColumns(parent, column, column + count - 1)
         del self._columns[column : column + count]
         self.endRemoveColumns()
+        return True
 
+    def removeRow(self, row, parent=QtCore.QModelIndex()):
+        return self.removeRows(row, 1, parent)
+ 
     def removeRows(self, row, count, parent=QtCore.QModelIndex()):
         if not parent.isValid():
             parent_item = self.root_item
@@ -91,6 +135,7 @@ class Model(QtCore.QAbstractItemModel):
         self.beginRemoveRows(parent, row, row + count - 1)
         parent_item.remove_children(row, count)
         self.endRemoveRows()
+        return True
  
     def rowCount(self, parent=QtCore.QModelIndex()):
         if not parent.isValid():
@@ -100,6 +145,8 @@ class Model(QtCore.QAbstractItemModel):
         return parent_item.child_count()
 
     def setData(self, index, value, role=QtCore.Qt.EditRole):
+        if not self.hasIndex(index.row(), index.column(), index.parent()):
+            return False
         if role == QtCore.Qt.EditRole:
             if value == 'None':
                 index.internalPointer().clear(self._columns[index.column()])
@@ -107,6 +154,12 @@ class Model(QtCore.QAbstractItemModel):
                 index.internalPointer().set_data( self._columns[index.column()], value )
             return True
         return False
+
+    def supportedDropActions(self):
+        return QtCore.Qt.CopyAction | QtCore.Qt.MoveAction
+    
+    def supportedDragActions(self):
+        return QtCore.Qt.MoveAction
 
 class Item(object):
     def __init__(self, parent_item=None, dictionary={}):
@@ -139,6 +192,18 @@ class Item(object):
 
     def insert_children(self, row, count):
         self._children[row:row+count-1] = [ Item(self, {}) for i in range(count) ]
+
+    def move_send(self, start, end):
+        c0 = self._children[0:start]
+        c1 = self._children[start:end]
+        c2 = self._children[end:len(self._children)]
+        self._children = c0 + c2
+        return c1
+
+    def move_receive(self, children, row):
+        c0 = self._children[0:row]
+        c1 = self._children[row:len(self._children)]
+        self._children = c0 + children + c1
 
     def parent(self):
         return self._parent_item

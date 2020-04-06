@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>474</width>
-    <height>338</height>
+    <width>500</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="font">
@@ -16,7 +16,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>PDF Stamp</string>
+   <string>PDF tools</string>
   </property>
   <property name="dockOptions">
    <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks|QMainWindow::ForceTabbedDocks</set>
@@ -76,7 +76,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>474</width>
+     <width>500</width>
      <height>21</height>
     </rect>
    </property>
@@ -92,13 +92,13 @@
     </property>
     <addaction name="actionOpen"/>
    </widget>
-   <widget class="QMenu" name="menuTool">
+   <widget class="QMenu" name="menuView">
     <property name="title">
      <string>View</string>
     </property>
    </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuTool"/>
+   <addaction name="menuView"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -165,6 +165,36 @@
     </layout>
    </widget>
   </widget>
+  <widget class="QDockWidget" name="dockWidgetUnite">
+   <property name="windowTitle">
+    <string>Unite</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="Unite" name="widget_2" native="true"/>
+     </item>
+    </layout>
+   </widget>
+  </widget>
   <action name="actionOpen">
    <property name="icon">
     <iconset resource="resource.qrc">
@@ -193,6 +223,12 @@
    <class>Filelist</class>
    <extends>QWidget</extends>
    <header location="global">widgets.filelist</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Unite</class>
+   <extends>QWidget</extends>
+   <header location="global">widgets.unite</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
