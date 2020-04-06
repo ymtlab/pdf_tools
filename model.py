@@ -4,6 +4,7 @@ from PyQt5 import QtWidgets, QtCore, QtGui
 class Model(QtCore.QAbstractItemModel):
     def __init__(self, parent_=None, root_item=None):
         super(Model, self).__init__(parent_)
+        self.parent_object = parent_
         self.root_item = root_item
         self.root_index = QtCore.QModelIndex()
         self._columns = []

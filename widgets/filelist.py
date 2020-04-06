@@ -35,6 +35,27 @@ class Filelist(QtWidgets.QWidget):
     def clear(self):
         self.model.removeRows(0, self.model.rowCount())
 
+    def column_settings(self):
+        # create list
+        keys_list = [ c.to_dict().keys() for c in self.model.root_item.children() ]
+        left_list = []
+        [left_list.extend(keys) for keys in keys_list]
+        left_list = sorted( list(set(left_list)) )
+        right_list = self.model.columns()
+        
+        # show window
+        list_settings = ListSettings(self, left_list, right_list)
+        list_settings.setWindowTitle('Columns settings')
+        r = list_settings.exec()
+
+        if r == 0:
+            return
+        
+        # insert columns
+        self.model.removeColumns(0, self.model.columnCount())
+        columns = [c.data('C0') for c in list_settings.model_right.root_item.children()]
+        self.model.insertColumns(0, columns)
+        
     def context_menu(self, point):
         self.menu.exec( self.focusWidget().mapToGlobal(point) )
 
@@ -111,27 +132,11 @@ class Filelist(QtWidgets.QWidget):
         gv.setScene(scene)
         gv.fitInView(scene.sceneRect(), QtCore.Qt.KeepAspectRatio)
         
-    def column_settings(self):
-        # create list
-        keys_list = [ c.to_dict().keys() for c in self.model.root_item.children() ]
-        left_list = []
-        [left_list.extend(keys) for keys in keys_list]
-        left_list = sorted( list(set(left_list)) )
-        right_list = self.model.columns()
-        
-        # show window
-        list_settings = ListSettings(self, left_list, right_list)
-        list_settings.setWindowTitle('Columns settings')
-        r = list_settings.exec()
+        # reset pdfinfo dock
+        pdfinfo_dock = mainwindow.findChild(QtWidgets.QDockWidget, 'dockWidgetPDFinfo')
+        pdfinfo = pdfinfo_dock.findChild(QtWidgets.QTableView).parentWidget()
+        pdfinfo.update_view()
 
-        if r == 0:
-            return
-        
-        # insert columns
-        self.model.removeColumns(0, self.model.columnCount())
-        columns = [c.data('C0') for c in list_settings.model_right.root_item.children()]
-        self.model.insertColumns(0, columns)
-        
 def main():
     app = QtWidgets.QApplication(sys.argv)
     window = Filelist(None)

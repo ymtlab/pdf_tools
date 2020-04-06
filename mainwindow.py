@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mainwindow.ui'
 #
-# Created by: PyQt5 UI code generator 5.14.1
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -103,6 +103,19 @@ class Ui_MainWindow(object):
         self.verticalLayout_4.addWidget(self.widget_3)
         self.dockWidgetConvert.setWidget(self.dockWidgetContents_3)
         MainWindow.addDockWidget(QtCore.Qt.DockWidgetArea(2), self.dockWidgetConvert)
+        self.dockWidgetPDFinfo = QtWidgets.QDockWidget(MainWindow)
+        self.dockWidgetPDFinfo.setObjectName("dockWidgetPDFinfo")
+        self.dockWidgetContents_4 = QtWidgets.QWidget()
+        self.dockWidgetContents_4.setObjectName("dockWidgetContents_4")
+        self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.dockWidgetContents_4)
+        self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_5.setSpacing(0)
+        self.verticalLayout_5.setObjectName("verticalLayout_5")
+        self.widget_4 = PDFinfo(self.dockWidgetContents_4)
+        self.widget_4.setObjectName("widget_4")
+        self.verticalLayout_5.addWidget(self.widget_4)
+        self.dockWidgetPDFinfo.setWidget(self.dockWidgetContents_4)
+        MainWindow.addDockWidget(QtCore.Qt.DockWidgetArea(2), self.dockWidgetPDFinfo)
         self.actionOpen = QtWidgets.QAction(MainWindow)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/remixicon/file-line.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -128,9 +141,11 @@ class Ui_MainWindow(object):
         self.dockWidgetFile.setWindowTitle(_translate("MainWindow", "File list"))
         self.dockWidgetUnite.setWindowTitle(_translate("MainWindow", "Unite"))
         self.dockWidgetConvert.setWindowTitle(_translate("MainWindow", "Convert"))
+        self.dockWidgetPDFinfo.setWindowTitle(_translate("MainWindow", "PDFinfo"))
         self.actionOpen.setText(_translate("MainWindow", "Open PDFs"))
 from graphics_view import GraphicsView
 from widgets.convert import Convert
 from widgets.filelist import Filelist
+from widgets.pdfinfo import PDFinfo
 from widgets.unite import Unite
 import resource_rc

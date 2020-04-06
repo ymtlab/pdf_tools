@@ -19,7 +19,8 @@ class MainWindow(QtWidgets.QMainWindow):
         action_and_icon = [
             [self.ui.dockWidgetFile.toggleViewAction(), QtGui.QIcon('remixicon/edit-box-line.svg')],
             [self.ui.dockWidgetUnite.toggleViewAction(), QtGui.QIcon('remixicon/edit-box-line.svg')],
-            [self.ui.dockWidgetConvert.toggleViewAction(), QtGui.QIcon('remixicon/edit-box-line.svg')]
+            [self.ui.dockWidgetConvert.toggleViewAction(), QtGui.QIcon('remixicon/edit-box-line.svg')],
+            [self.ui.dockWidgetPDFinfo.toggleViewAction(), QtGui.QIcon('remixicon/edit-box-line.svg')]
         ]
         for action, icon in action_and_icon:
             action.setIcon(icon)
@@ -28,6 +29,9 @@ class MainWindow(QtWidgets.QMainWindow):
         
         self.ui.dockWidgetUnite.close()
         self.ui.dockWidgetConvert.close()
+        self.ui.dockWidgetPDFinfo.close()
+
+        self.resize(800, 600)
 
     def open_pdfs(self):
         p = os.getenv('HOMEDRIVE') + os.getenv('HOMEPATH') + '\\Desktop\\united.pdf'

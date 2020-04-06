@@ -225,6 +225,36 @@
     </layout>
    </widget>
   </widget>
+  <widget class="QDockWidget" name="dockWidgetPDFinfo">
+   <property name="windowTitle">
+    <string>PDFinfo</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_4">
+    <layout class="QVBoxLayout" name="verticalLayout_5">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="PDFinfo" name="widget_4" native="true"/>
+     </item>
+    </layout>
+   </widget>
+  </widget>
   <action name="actionOpen">
    <property name="icon">
     <iconset resource="resource.qrc">
@@ -265,6 +295,12 @@
    <class>Convert</class>
    <extends>QWidget</extends>
    <header location="global">widgets.convert</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PDFinfo</class>
+   <extends>QWidget</extends>
+   <header location="global">widgets.pdfinfo</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
