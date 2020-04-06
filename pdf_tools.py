@@ -18,7 +18,8 @@ class MainWindow(QtWidgets.QMainWindow):
         menu_view = self.ui.menubar.findChild(QtWidgets.QMenu, 'menuView')
         action_and_icon = [
             [self.ui.dockWidgetFile.toggleViewAction(), QtGui.QIcon('remixicon/edit-box-line.svg')],
-            [self.ui.dockWidgetUnite.toggleViewAction(), QtGui.QIcon('remixicon/edit-box-line.svg')]
+            [self.ui.dockWidgetUnite.toggleViewAction(), QtGui.QIcon('remixicon/edit-box-line.svg')],
+            [self.ui.dockWidgetConvert.toggleViewAction(), QtGui.QIcon('remixicon/edit-box-line.svg')]
         ]
         for action, icon in action_and_icon:
             action.setIcon(icon)
@@ -26,6 +27,7 @@ class MainWindow(QtWidgets.QMainWindow):
             menu_view.addAction(action)
         
         self.ui.dockWidgetUnite.close()
+        self.ui.dockWidgetConvert.close()
 
     def open_pdfs(self):
         p = os.getenv('HOMEDRIVE') + os.getenv('HOMEPATH') + '\\Desktop\\united.pdf'

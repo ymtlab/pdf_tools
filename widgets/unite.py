@@ -46,6 +46,8 @@ class Unite(QtWidgets.QWidget):
             return
         p = os.getenv('HOMEDRIVE') + os.getenv('HOMEPATH') + '\\Desktop'
         foldername = QtWidgets.QFileDialog.getExistingDirectory(self, 'Save folder', p)
+        if foldername == '':
+            return
 
         # get paths
         model = self.filelist()

@@ -20,27 +20,36 @@ class Poppler():
         '''
         return image path (type pathlib Path)
         '''
-        suffix = output_path.suffix
-        output2 = output_path.parent / output_path.stem
 
-        # create command
-        cmd = [str(self.pdftocairo_path), '-'+suffix.replace('.',''), '-r', str(resolution), str(pdf_path), str(output2)]
-        cmd.extend(args)
+        # suffix option
+        suffix_option = '-' + output_path.suffix.replace('.','')
+        if suffix_option == '-jpg':
+            suffix_option = '-jpeg'
         
+        # output path
+        if suffix_option == '-svg':
+            output2 = output_path
+            output_path2 = output_path
+        else:
+            output2 = output_path.parent / output_path.stem
+            output_path2 = output_path.parent / (output_path.stem + '-1' + output_path.suffix)
+        
+        # create command
+        cmd = [str(self.pdftocairo_path), suffix_option, '-r', str(resolution), str(pdf_path), str(output2)]
+        cmd.extend(args)
+
         stdout, stderr = self.subprocess_popen(cmd)
         if stderr:
             print(stderr)
             return stdout, stderr
         
-        # return image path
-        output_path2 = output_path.parent / (output_path.stem + '-1'+suffix)
         return output_path2
 
     def pdfinfo(self, pdf_path):
         '''
         return dictionary from pdf info
         '''
-        cmd = [str(self.pdfinfo_path), str(pdf_path)]
+        cmd = [ str(self.pdfinfo_path), str(pdf_path) ]
         stdout, stderr = self.subprocess_popen(cmd)
         if not stderr == '':
             return stdout, stderr

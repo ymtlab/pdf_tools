@@ -90,6 +90,19 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.addWidget(self.widget_2)
         self.dockWidgetUnite.setWidget(self.dockWidgetContents_2)
         MainWindow.addDockWidget(QtCore.Qt.DockWidgetArea(2), self.dockWidgetUnite)
+        self.dockWidgetConvert = QtWidgets.QDockWidget(MainWindow)
+        self.dockWidgetConvert.setObjectName("dockWidgetConvert")
+        self.dockWidgetContents_3 = QtWidgets.QWidget()
+        self.dockWidgetContents_3.setObjectName("dockWidgetContents_3")
+        self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.dockWidgetContents_3)
+        self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_4.setSpacing(0)
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.widget_3 = Convert(self.dockWidgetContents_3)
+        self.widget_3.setObjectName("widget_3")
+        self.verticalLayout_4.addWidget(self.widget_3)
+        self.dockWidgetConvert.setWidget(self.dockWidgetContents_3)
+        MainWindow.addDockWidget(QtCore.Qt.DockWidgetArea(2), self.dockWidgetConvert)
         self.actionOpen = QtWidgets.QAction(MainWindow)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/remixicon/file-line.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -114,8 +127,10 @@ class Ui_MainWindow(object):
         self.toolBar.setWindowTitle(_translate("MainWindow", "toolBar"))
         self.dockWidgetFile.setWindowTitle(_translate("MainWindow", "File list"))
         self.dockWidgetUnite.setWindowTitle(_translate("MainWindow", "Unite"))
+        self.dockWidgetConvert.setWindowTitle(_translate("MainWindow", "Convert"))
         self.actionOpen.setText(_translate("MainWindow", "Open PDFs"))
 from graphics_view import GraphicsView
+from widgets.convert import Convert
 from widgets.filelist import Filelist
 from widgets.unite import Unite
 import resource_rc

@@ -195,6 +195,36 @@
     </layout>
    </widget>
   </widget>
+  <widget class="QDockWidget" name="dockWidgetConvert">
+   <property name="windowTitle">
+    <string>Convert</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_3">
+    <layout class="QVBoxLayout" name="verticalLayout_4">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="Convert" name="widget_3" native="true"/>
+     </item>
+    </layout>
+   </widget>
+  </widget>
   <action name="actionOpen">
    <property name="icon">
     <iconset resource="resource.qrc">
@@ -229,6 +259,12 @@
    <class>Unite</class>
    <extends>QWidget</extends>
    <header location="global">widgets.unite</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Convert</class>
+   <extends>QWidget</extends>
+   <header location="global">widgets.convert</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
