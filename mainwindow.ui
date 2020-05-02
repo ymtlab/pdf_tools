@@ -255,6 +255,36 @@
     </layout>
    </widget>
   </widget>
+  <widget class="QDockWidget" name="dockWidgetDrawshapes">
+   <property name="windowTitle">
+    <string>Draw shapes</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_5">
+    <layout class="QVBoxLayout" name="verticalLayout_6">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="DrawShapes" name="widget_5" native="true"/>
+     </item>
+    </layout>
+   </widget>
+  </widget>
   <action name="actionOpen">
    <property name="icon">
     <iconset resource="resource.qrc">
@@ -301,6 +331,12 @@
    <class>PDFinfo</class>
    <extends>QWidget</extends>
    <header location="global">widgets.pdfinfo</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DrawShapes</class>
+   <extends>QWidget</extends>
+   <header location="global">widgets.draw_shapes</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

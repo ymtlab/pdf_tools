@@ -156,12 +156,6 @@ class Model(QtCore.QAbstractItemModel):
             return True
         return False
 
-    def supportedDropActions(self):
-        return QtCore.Qt.CopyAction | QtCore.Qt.MoveAction
-    
-    def supportedDragActions(self):
-        return QtCore.Qt.MoveAction
-
 class Item(object):
     def __init__(self, parent_item=None, dictionary={}):
         self._dict = dictionary
@@ -191,6 +185,10 @@ class Item(object):
             return self._dict[column]
         return None
 
+    def extend_dict(self, _dict):
+        for key in _dict:
+            self._dict[key] = _dict[key]
+        
     def insert_children(self, row, count):
         self._children[row:row+count-1] = [ Item(self, {}) for i in range(count) ]
 

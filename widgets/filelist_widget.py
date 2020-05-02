@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'widgets\filelist_widget.ui'
 #
-# Created by: PyQt5 UI code generator 5.14.1
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -31,8 +31,6 @@ class Ui_Filelist(object):
         self.actionDelete_data.setObjectName("actionDelete_data")
         self.actionColumn_Settings = QtWidgets.QAction(Filelist)
         self.actionColumn_Settings.setObjectName("actionColumn_Settings")
-        self.actionClear = QtWidgets.QAction(Filelist)
-        self.actionClear.setObjectName("actionClear")
 
         self.retranslateUi(Filelist)
         self.tableView.clicked['QModelIndex'].connect(Filelist.tableViewClicked)
@@ -40,7 +38,6 @@ class Ui_Filelist(object):
         self.actionCopy.triggered.connect(Filelist.copy)
         self.actionDelete_data.triggered.connect(Filelist.delete_data)
         self.actionColumn_Settings.triggered.connect(Filelist.column_settings)
-        self.actionClear.triggered.connect(Filelist.clear)
         QtCore.QMetaObject.connectSlotsByName(Filelist)
 
     def retranslateUi(self, Filelist):
@@ -51,4 +48,3 @@ class Ui_Filelist(object):
         self.actionDelete_data.setText(_translate("Filelist", "Delete data"))
         self.actionDelete_data.setShortcut(_translate("Filelist", "Del"))
         self.actionColumn_Settings.setText(_translate("Filelist", "Column Settings"))
-        self.actionClear.setText(_translate("Filelist", "Clear"))

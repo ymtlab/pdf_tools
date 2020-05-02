@@ -53,5 +53,53 @@ class GraphicsView(QtWidgets.QGraphicsView):
         self.setDragMode(QtWidgets.QGraphicsView.NoDrag)
 
         if event.button() == QtCore.Qt.LeftButton:
+            # get coordinates
             p = self.mapToScene(event.pos())
             self.coordinates.extend([p.x(), p.y()])
+
+            # get drawshapes
+            mainwindow = self.find_mainwindow(self)
+            drawshapes = mainwindow.draw_shapes
+            model = drawshapes.model
+            items = [ index.internalPointer() for index in drawshapes.ui.treeView.selectedIndexes() ]
+
+            #items, model = self.drawshapes_from_mainwindow(self)
+            if items is None:
+                return
+            
+            for item in items:
+                # set coordinates to Page size column in drawshapes model
+                item.set_data( 'Page size', ','.join([str(int(p)) for p in self.coordinates]) )
+                parent = model.index(item.parent().row(), 0, QtCore.QModelIndex())
+                index = model.index(item.row(), 0, parent)
+                model.dataChanged.emit(index, index)
+                # update shape
+                if item.data('type') == 'square':
+                    drawshapes.set_square()
+                #if item.data('type') == 'circle_stamp':
+                #    drawshapes.set_stamp()
+
+            # update view
+            mainwindow = self.find_mainwindow(self)
+            indexes = mainwindow.filelist.ui.tableView.selectedIndexes()
+            if len(indexes) > 0:
+                mainwindow.filelist.tableViewClicked(indexes[0])
+
+    def find_mainwindow(self, parent):
+        if parent is None:
+            return None
+        if parent.inherits('QMainWindow'):
+            return parent
+        return self.find_mainwindow(parent.parent())
+
+    def drawshapes_from_mainwindow(self, is_selected=False):
+        try:
+            mainwindow = self.find_mainwindow(self)
+            dock = mainwindow.findChild(QtWidgets.QDockWidget, 'dockWidgetDrawshapes')
+            treeView = dock.findChild(QtWidgets.QTreeView)
+            if is_selected:
+                return [ index.internalPointer() for index in treeView.selectedIndexes() ], treeView.model()
+            else:
+                return [ child for child in treeView.model().root_item.children() ], treeView.model()
+        except:
+            return None

@@ -25,16 +25,8 @@ class Filelist(QtWidgets.QWidget):
 
         self.droppable_suffix = ['.pdf']
         self.menu = QtWidgets.QMenu(self)
-        self.menu.addActions([
-            self.ui.actionCopy, 
-            self.ui.actionDelete_data, 
-            self.ui.actionColumn_Settings,
-            self.ui.actionClear
-        ])
+        self.menu.addActions([self.ui.actionCopy, self.ui.actionDelete_data, self.ui.actionColumn_Settings])
         
-    def clear(self):
-        self.model.removeRows(0, self.model.rowCount())
-
     def column_settings(self):
         # create list
         keys_list = [ c.to_dict().keys() for c in self.model.root_item.children() ]
@@ -87,8 +79,16 @@ class Filelist(QtWidgets.QWidget):
             event.ignore()
 
     def dropEvent(self, event):
+        # input tableview
         paths = [Path(url.toLocalFile()) for url in event.mimeData().urls()]
+        print(paths)
         self.open_files(paths)
+
+        # input draw shapes
+        mainwindow = self.find_mainwindow(self)
+        dock = mainwindow.findChild(QtWidgets.QDockWidget, 'dockWidgetDrawshapes')
+        draw_shapes = dock.findChild(QtWidgets.QTreeView).parentWidget()
+        draw_shapes.reset()
 
     def find_mainwindow(self, parent):
         if parent is None:
@@ -118,24 +118,51 @@ class Filelist(QtWidgets.QWidget):
     def tableViewClicked(self, index):
         # has parent or not index.column() = 0
         mainwindow = self.find_mainwindow(self)
-        if mainwindow is None or not index.column() == 0:
-            return
+        #if mainwindow is None or not index.column() == 0:
+        #    return
 
         # pdf to png and create scene from png
-        p = Poppler().pdftocairo(index.internalPointer().data('Path'), Path('__temp__.png'), 300)
-        scene = QtWidgets.QGraphicsScene()
-        scene.addPixmap( QtGui.QPixmap(str(p)) )
-        p.unlink()
-
-        # set scene in graphicsView from mainwindow
         gv = mainwindow.ui.graphicsView
-        gv.setScene(scene)
-        gv.fitInView(scene.sceneRect(), QtCore.Qt.KeepAspectRatio)
-        
+        item = index.internalPointer()
+        pixmap = item.data('Pixmap')
+        if pixmap is None:
+            p = Poppler().pdftocairo(item.data('Path'), Path('__temp__.png'), 300)
+            scene = QtWidgets.QGraphicsScene()
+            pixmap = QtGui.QPixmap(str(p))
+            item.set_data('Pixmap', pixmap)
+            scene.addPixmap(pixmap)
+            p.unlink()
+            # set scene in graphicsView
+            gv.setScene(scene)
+            gv.fitInView(scene.sceneRect(), QtCore.Qt.KeepAspectRatio)
+        else:
+            # set scene in graphicsView
+            scene = QtWidgets.QGraphicsScene()
+            scene.addPixmap(pixmap)
+            gv.setScene(scene)
+
         # reset pdfinfo dock
         pdfinfo_dock = mainwindow.findChild(QtWidgets.QDockWidget, 'dockWidgetPDFinfo')
         pdfinfo = pdfinfo_dock.findChild(QtWidgets.QTableView).parentWidget()
         pdfinfo.update_view()
+
+        # add shapes in graphicsView
+        mainwindow = self.find_mainwindow(self)
+        dock = mainwindow.findChild(QtWidgets.QDockWidget, 'dockWidgetDrawshapes')
+        draw_shapes = dock.findChild(QtWidgets.QTreeView).parentWidget()
+        shapes, size, rot = None, item.data('Page size'), item.data('Page rot')
+        for child in draw_shapes.model.root_item.children():
+            if child.data('Page size') == size and child.data('Page rot') == rot:
+                shapes = child
+        if shapes is None:
+            return
+        for shape in shapes.children(): # add shapes in graphicsView
+            c = [ float(s) for s in shape.data('Page size').split(',') ]
+            pixmap = shape.data('Pixmap')
+            if pixmap is None:
+                continue
+            pixmap_item = gv.scene().addPixmap(pixmap)
+            pixmap_item.setPos( c[0], c[1] )
 
 def main():
     app = QtWidgets.QApplication(sys.argv)

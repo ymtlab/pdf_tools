@@ -67,11 +67,6 @@
     <string>Column Settings</string>
    </property>
   </action>
-  <action name="actionClear">
-   <property name="text">
-    <string>Clear</string>
-   </property>
-  </action>
  </widget>
  <resources/>
  <connections>
@@ -155,22 +150,6 @@
     </hint>
    </hints>
   </connection>
-  <connection>
-   <sender>actionClear</sender>
-   <signal>triggered()</signal>
-   <receiver>Filelist</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>149</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
  </connections>
  <slots>
   <slot>tableViewClicked()</slot>
@@ -179,6 +158,5 @@
   <slot>paste()</slot>
   <slot>delete_data()</slot>
   <slot>column_settings()</slot>
-  <slot>clear()</slot>
  </slots>
 </ui>
